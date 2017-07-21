@@ -20,7 +20,7 @@ target_compile_features(kvasir_format INTERFACE
 		cxx_user_literals
 		${CPP_EXTRA_FEATURES})
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/mpl/src/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/abcd/src/)
 
 add_executable(kvasir_format_test test/test.cpp)
 target_link_libraries(kvasir_format_test kvasir_format)

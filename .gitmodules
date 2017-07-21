@@ -1,0 +1,3 @@
+[submodule "abcd"]
+	path = abcd
+	url = https://github.com/odinthenerd/abcd.git
