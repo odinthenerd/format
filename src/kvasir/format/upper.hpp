@@ -1,24 +1,30 @@
 #pragma once
-#include "../../../abcd/src/kvasir/abcd/abcd.hpp"
+#include "kvasir/abcd/abcd.hpp"
 #include <utility>
 
 namespace kvasir {
     namespace format {
-        template<char B, char E, char O>
+        template<typename Abilities, char B, char E, char O>
         struct char_replace{
             template<typename>
             using f = void; //no public interface
-            constexpr char operator()(char c){
-                return (c>=B && c<=E)? c-(B-O):c;
-            }
+			constexpr char operator()(const char c){
+				return (c>=B && c<=E)? c-(B-O):c;
+			}
+			template<typename It>
+			std::pair<It,bool> operator()(const char c, It begin, It end){
+				if (c>=B && c<=E){
+					*begin++ = c-(B-O);
+					return {begin, true};
+				}
+				return {begin, false};
+			}
         };
 
-		using to_upper_EN = char_replace<'a', 'z', 'A'>;
-
-        namespace detail{
+		namespace detail{
 			struct make_upper{};
-            template<typename T>
-            struct pair_char_range_public{
+			template<typename T>
+			struct pair_char_range_public{
 				std::pair<char*, char*> process(std::pair<char*, char*> in) {
 					using namespace kvasir::abcd;
 					auto it = in.first;
@@ -27,12 +33,12 @@ namespace kvasir {
 					}
 					return { it,in.second };
 				}
-            };
-        }
+			};
+		}
+
+		using to_upper_EN = char_replace<abcd::abilities<format::detail::make_upper>,'a', 'z', 'A'>;
+
+
         using pair_char_range = ::kvasir::abcd::wrap_trivial_public_interface<detail::pair_char_range_public>;
     }
-	namespace abcd {
-		template<char B, char E, char D>
-		struct has_ability<format::char_replace<B, E, D>, format::detail::make_upper> :std::true_type {};
-	}
 }
