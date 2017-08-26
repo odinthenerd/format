@@ -13,6 +13,7 @@ target_include_directories(kvasir_format INTERFACE
 target_compile_features(kvasir_format INTERFACE
 		cxx_variadic_templates
         cxx_generic_lambdas
+        cxx_variable_templates
 		cxx_constexpr
 		cxx_alias_templates
 		cxx_auto_type
