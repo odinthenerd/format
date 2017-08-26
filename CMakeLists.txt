@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.0)
 project(kvasir_format)
 
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 # create the kvasir_format library target
 add_library(kvasir_format INTERFACE)
 target_include_directories(kvasir_format INTERFACE
@@ -9,6 +11,7 @@ target_include_directories(kvasir_format INTERFACE
 # to support those features. The c++ version is not explicitly set, so that cmake can figure
 # things out by itself
 target_compile_features(kvasir_format INTERFACE
+        cxx_generic_lambdas
 		cxx_variadic_templates
 		cxx_constexpr
 		cxx_alias_templates
@@ -21,10 +24,12 @@ target_compile_features(kvasir_format INTERFACE
 		${CPP_EXTRA_FEATURES})
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/abcd/src/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/abcd/src/)
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/abcd/mpl/src/)
 
 add_executable(kvasir_format_test test/test.cpp)
 target_link_libraries(kvasir_format_test kvasir_format)
-target_compile_options(kvasir_format_test PUBLIC -ftemplate-depth=2048 -Wall) # -std=gnu++1z)
+target_compile_options(kvasir_format_test PUBLIC -ftemplate-depth=2048 -Wall)
 
 option(MAKE_INCLUDE_TESTS OFF)
 if (MAKE_INCLUDE_TESTS)

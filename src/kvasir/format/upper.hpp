@@ -23,7 +23,7 @@ namespace kvasir {
 					using namespace kvasir::abcd;
 					auto it = in.first;
 					for (; it < in.second; it++) {
-						for_each(access<T>(this), capability_t<make_upper>{}, [&](auto& a) {*it = a(*it); });
+						for_each(this, ability<make_upper>, [&](auto& a) {*it = a(*it); });
 					}
 					return { it,in.second };
 				}
@@ -33,6 +33,6 @@ namespace kvasir {
     }
 	namespace abcd {
 		template<char B, char E, char D>
-		struct has_capability<format::char_replace<B, E, D>, format::detail::make_upper> :std::true_type {};
+		struct has_ability<format::char_replace<B, E, D>, format::detail::make_upper> :std::true_type {};
 	}
 }
