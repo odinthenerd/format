@@ -11,8 +11,8 @@ target_include_directories(kvasir_format INTERFACE
 # to support those features. The c++ version is not explicitly set, so that cmake can figure
 # things out by itself
 target_compile_features(kvasir_format INTERFACE
-        cxx_generic_lambdas
 		cxx_variadic_templates
+        cxx_generic_lambdas
 		cxx_constexpr
 		cxx_alias_templates
 		cxx_auto_type
