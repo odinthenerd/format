@@ -23,22 +23,22 @@ namespace kvasir {
 
 		namespace detail{
 			struct make_upper{};
-			template<typename T>
-			struct pair_char_range_public{
+			template<typename B>
+			struct pair_char_range_public : B{
 				std::pair<char*, char*> process(std::pair<char*, char*> in) {
 					using namespace kvasir::abcd;
 					auto it = in.first;
 					for (; it < in.second; it++) {
-						for_each(this, ability<make_upper>, [&](auto& a) {*it = a(*it); });
+						B::for_each(ability<make_upper>, [&](auto& a) {*it = a(*it); });
 					}
 					return { it,in.second };
 				}
 			};
 		}
 
-		using to_upper_EN = char_replace<abcd::abilities<format::detail::make_upper>,'a', 'z', 'A'>;
+		using to_upper_EN = char_replace<abcd::abilities_t<format::detail::make_upper>,'a', 'z', 'A'>;
 
 
-        using pair_char_range = ::kvasir::abcd::wrap_trivial_public_interface<detail::pair_char_range_public>;
+        using pair_char_range = ::kvasir::abcd::interface_t<detail::pair_char_range_public>;
     }
 }
